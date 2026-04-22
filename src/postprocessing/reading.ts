@@ -1,13 +1,19 @@
-// For Reading mode - targets <code> elements in <p> tags
-export function hideJiraPointersReading(element: HTMLElement) {
-	// In Reading mode, inline code becomes <code> elements
-	const codeElements = element.querySelectorAll(':not(pre) > code');
+import JiraPlugin from "../main";
 
-	codeElements.forEach((codeEl) => {
-		const text = codeEl.textContent || '';
+export function hideJiraPointersReading(plugin: JiraPlugin) {
+	return function(element: HTMLElement, _: any) {
+		const codeElements = element.querySelectorAll(':not(pre) > code');
 
-		if (text.startsWith('jira-sync-')) {
-			codeEl.addClass('jira-sync-hidden');
-		}
-	});
+		codeElements.forEach(codeEl => {
+			const text = codeEl.textContent || '';
+
+			if (text.startsWith('jira-sync-')) {
+				if (plugin.settings.global.highlightSyncSections) {
+					codeEl.addClass('jira-sync-marker');
+				} else {
+					codeEl.addClass('jira-sync-hidden');
+				}
+			}
+		});
+	};
 }
