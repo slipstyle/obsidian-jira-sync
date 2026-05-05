@@ -57,6 +57,18 @@ interface AdfRuleNode {
 	type: 'rule';
 }
 
+interface AdfTaskItemNode {
+	type: 'taskItem';
+	attrs: { localId: string; state: 'TODO' | 'DONE' };
+	content: AdfInlineContent[];
+}
+
+interface AdfTaskListNode {
+	type: 'taskList';
+	attrs: { localId: string };
+	content: AdfTaskItemNode[];
+}
+
 type AdfBlockNode =
 	| AdfParagraphNode
 	| AdfHeadingNode
